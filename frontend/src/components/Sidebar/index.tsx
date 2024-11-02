@@ -44,25 +44,27 @@ export default function Sidebar() {
   }
 
   return (
-    <Sider
-      theme='light'
-      collapsible
-      collapsed={collapsed}
-      onCollapse={value => setCollapsed(value)}
-      className='shadow-lg'
-    >
-      <div
-        className='flex h-16 cursor-pointer items-center justify-center text-lg font-semibold text-green-700'
-        onClick={handleLogoClick}
+    <div className='flex min-h-screen'>
+      <Sider
+        theme='light'
+        collapsible
+        collapsed={collapsed}
+        onCollapse={value => setCollapsed(value)}
+        className='shadow-lg'
       >
-        Infantio
-      </div>
-      <Menu
-        mode='inline'
-        items={items}
-        selectedKeys={selectedKey ? [selectedKey] : []}
-        onClick={handleMenuClick}
-      />
-    </Sider>
+        <div
+          className='flex h-16 cursor-pointer items-center justify-center text-lg font-semibold text-green-700'
+          onClick={handleLogoClick}
+        >
+          Infantio
+        </div>
+        <Menu
+          mode='inline'
+          items={items}
+          selectedKeys={selectedKey ? [selectedKey] : []}
+          onClick={handleMenuClick}
+        />
+      </Sider>
+    </div>
   )
 }
