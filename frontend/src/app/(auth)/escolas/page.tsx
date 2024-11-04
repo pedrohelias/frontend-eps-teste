@@ -1,8 +1,14 @@
 'use client'
 
+import ModalCreateSchool from '@/components/School/ModalCreateSchool'
+import { fetchSchools } from '@/store/slices/schoolSlice'
+import { AppDispatch, RootState } from '@/store/store'
 import type { TableProps } from 'antd'
 import { Button, Table } from 'antd'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 interface DataType {
   key: string
@@ -13,6 +19,20 @@ interface DataType {
 
 export default function Schools() {
   const router = useRouter()
+  const dispatch = useDispatch<AppDispatch>()
+  const { schools, loading, error } = useSelector(
+    (state: RootState) => state.school
+  )
+
+  useEffect(() => {
+    dispatch(fetchSchools())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error)
+    }
+  }, [error])
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -33,36 +53,26 @@ export default function Schools() {
     }
   ]
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'Encantare 1',
-      director: 'Lucas',
-      numberStudents: 200
-    },
-    {
-      key: '2',
-      name: 'Encantare 2',
-      director: 'Lopes',
-      numberStudents: 400
-    },
-    {
-      key: '3',
-      name: 'Encantare 3',
-      director: 'Frazão',
-      numberStudents: 800
-    }
-  ]
+  const data: DataType[] = schools.map((school, index) => ({
+    key: index.toString(),
+    name: school.name,
+    director: school.directorEmail,
+    numberStudents: school.numberStudents
+  }))
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleRowClick = (record: DataType) => {
-    router.push(`/escolas/${record.key}`) // Redireciona para a página da escola
+    router.push(`/escolas/${record.key}`)
   }
 
   return (
     <div className='mx-6 rounded-lg bg-white p-6 shadow-lg'>
       <div className='mb-4 flex items-center justify-between'>
         <h2 className='text-lg font-semibold'>Gerenciamento de escolas</h2>
-        <Button type='primary'>Adicionar escola</Button>
+        <Button type='primary' onClick={() => setIsModalOpen(true)}>
+          Adicionar escola
+        </Button>
       </div>
       <Table<DataType>
         columns={columns}
@@ -73,6 +83,12 @@ export default function Schools() {
         })}
         rowClassName='hover:bg-gray-100 transition duration-200 cursor-pointer'
         bordered
+        loading={loading}
+      />
+
+      <ModalCreateSchool
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
       />
     </div>
   )
