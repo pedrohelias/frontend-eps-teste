@@ -1,21 +1,16 @@
 'use client'
 
-import ModalCreateSchool from '@/components/School/ModalCreateSchool'
+import ModalSaveSchool from '@/components/School/ModalSaveSchool'
 import { fetchSchools } from '@/store/slices/schoolSlice'
 import { AppDispatch, RootState } from '@/store/store'
+import { SchoolResponseDto } from '@/types/Schools'
 import type { TableProps } from 'antd'
 import { Button, Table } from 'antd'
+import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-
-interface DataType {
-  key: string
-  name: string
-  director: string
-  numberStudents: number
-}
 
 export default function Schools() {
   const router = useRouter()
@@ -34,7 +29,7 @@ export default function Schools() {
     }
   }, [error])
 
-  const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<SchoolResponseDto>['columns'] = [
     {
       title: 'Nome',
       dataIndex: 'name',
@@ -53,17 +48,20 @@ export default function Schools() {
     }
   ]
 
-  const data: DataType[] = schools.map((school, index) => ({
-    key: index.toString(),
+  const data: SchoolResponseDto[] = schools.map(school => ({
+    id: school.id,
     name: school.name,
     director: school.directorEmail,
-    numberStudents: school.numberStudents
+    numberStudents: school.numberStudents,
+    createdAt: school.createdAt,
+    directorEmail: school.directorEmail,
+    disabled: school.disabled
   }))
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleRowClick = (record: DataType) => {
-    router.push(`/escolas/${record.key}`)
+  const handleRowClick = (record: SchoolResponseDto) => {
+    router.push(`/escolas/${record.id}`)
   }
 
   return (
@@ -74,19 +72,27 @@ export default function Schools() {
           Adicionar escola
         </Button>
       </div>
-      <Table<DataType>
+      <Table<SchoolResponseDto>
         columns={columns}
         dataSource={data}
         pagination={false}
         onRow={record => ({
           onClick: () => handleRowClick(record)
         })}
-        rowClassName='hover:bg-gray-100 transition duration-200 cursor-pointer'
+        rowClassName={({ disabled }) =>
+          classNames(
+            'cursor-pointer hover:bg-gray-100 transition duration-200',
+            {
+              'bg-red-100 hover:!bg-red-200': disabled
+            }
+          )
+        }
+        rowHoverable={false}
         bordered
         loading={loading}
       />
 
-      <ModalCreateSchool
+      <ModalSaveSchool
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
