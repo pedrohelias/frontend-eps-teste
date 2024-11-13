@@ -1,6 +1,6 @@
 'use client'
 
-import { Input, Button, Form, Checkbox } from 'antd';
+import { Input, Button, Form, Radio } from 'antd';
 export default function FormularioMatricula() {
 
   return (
@@ -140,12 +140,11 @@ export default function FormularioMatricula() {
 
                 {/* Convenio */}
                 <Form.Item label="Possui Convênio?" name="possuiConvenio">
-                  <Checkbox.Group>
-                    <Checkbox value="sim">Sim</Checkbox>
-                    <Checkbox value="nao">Não</Checkbox>
-                  </Checkbox.Group>
+                  <Radio.Group>
+                    <Radio value="sim">Sim</Radio>
+                    <Radio value="nao">Não</Radio>
+                  </Radio.Group>
                 </Form.Item>
-
                 {/* Alergias */}
                 <Form.Item label="Alergias" name="alergias">
                   <Input.TextArea placeholder="Descreva as alergias" />
