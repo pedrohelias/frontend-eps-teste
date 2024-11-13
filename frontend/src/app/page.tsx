@@ -1,6 +1,6 @@
 'use client'
 
-import { Input, Button, Form } from 'antd';
+import { Input, Button, Form, Checkbox } from 'antd';
 export default function FormularioMatricula() {
 
   return (
@@ -108,9 +108,79 @@ export default function FormularioMatricula() {
           </div>
 
           {/* Outros quadrados */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border p-4 rounded-md h-32 bg-gray-200"></div>
-            <div className="border p-4 rounded-md h-32 bg-gray-200"></div>
+          <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full">
+
+
+            <h2 className="text-lg font-semibold mb-4">Observações Médicas</h2>
+              <Form layout="vertical" className="space-y-4">
+                {/* Hospital e Telefone */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Form.Item label="Hospital" name="hospital">
+                    <Input placeholder="Nome do hospital" />
+                  </Form.Item>
+                  <Form.Item label="Telefone Hospital" name="telefoneHospital">
+                    <Input placeholder="Telefone do hospital" />
+                  </Form.Item>
+                </div>
+
+                {/* Médico e Telefone Médico */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Form.Item label="Médico" name="medico">
+                    <Input placeholder="Nome do médico" />
+                  </Form.Item>
+                  <Form.Item label="Telefone Médico" name="telefoneMedico">
+                    <Input placeholder="Telefone do médico" />
+                  </Form.Item>
+                </div>
+
+                {/* Endereço do Hospital */}
+                <Form.Item label="Endereço Hospital" name="enderecoHospital">
+                  <Input placeholder="Endereço completo do hospital" />
+                </Form.Item>
+
+                {/* Convenio */}
+                <Form.Item label="Possui Convênio?" name="possuiConvenio">
+                  <Checkbox.Group>
+                    <Checkbox value="sim">Sim</Checkbox>
+                    <Checkbox value="nao">Não</Checkbox>
+                  </Checkbox.Group>
+                </Form.Item>
+
+                {/* Alergias */}
+                <Form.Item label="Alergias" name="alergias">
+                  <Input.TextArea placeholder="Descreva as alergias" />
+                </Form.Item>
+
+                {/* Medicamentos em caso de febre */}
+                <Form.Item label="Medicamentos em caso de febre" name="medicamentosFebre">
+                  <Input.TextArea placeholder="Descreva os medicamentos" />
+                </Form.Item>
+
+                {/* Medicamentos em caso de vômito */}
+                <Form.Item label="Medicamento em caso de vômito" name="medicamentosVomito">
+                  <Input.TextArea placeholder="Descreva os medicamentos" />
+                </Form.Item>
+
+                {/* Observações gerais */}
+                <Form.Item label="Observações gerais" name="observacoesGerais">
+                  <Input.TextArea placeholder="Outras observações" />
+                </Form.Item>
+
+                {/* Botão Salvar */}
+                <div className="flex justify-end">
+                  <Button type="primary" htmlType="submit">
+                    Salvar
+                  </Button>
+                </div>
+              </Form>
+            <div className="border p-4 rounded-md h-32 bg-gray-200">
+
+
+
+
+
+              
+            </div>
           </div>
         </Form>
       </div>
