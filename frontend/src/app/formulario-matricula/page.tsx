@@ -4,6 +4,64 @@ import { Input, Button, Form, Radio, Table } from 'antd';
 
 export default function FormularioMatricula() {
 
+  {/*Colunas para Observações sobre aluno*/}
+  const columnsObservacoes = [
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'Ações',
+      key: 'actions',
+      align: 'right' as const,
+      render: () => (
+        <>
+          <a>Visualizar</a> | <a>Baixar</a> | <a>Deletar</a>
+        </>
+      ),
+    },
+  ];
+  {/*Colunas para Atividades do Aluno*/}
+  const columnsAtividades = [
+    {
+      title: 'Title',
+      dataIndex: 'title1',
+      key: 'title1',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title2',
+      key: 'title2',
+    },
+    {
+      title: 'Data',
+      dataIndex: 'data',
+      key: 'data',
+    },
+    {
+      title: 'Ações',
+      key: 'actions',
+      align: 'right' as const,
+      render: () => (
+        <>
+          <a>Visualizar</a> | <a>Baixar</a> | <a>Deletar</a>
+        </>
+      ),
+    },
+  ];
+
+{/*Dados de exemplo para observações e atividades*/}
+  const dataObservacoes = [
+    { key: '1', title: 'Observação 1' },
+    { key: '2', title: 'Observação 2' },
+  ];
+
+  const dataAtividades = [
+    { key: '1', title1: 'Atividade 1', title2: 'Detalhe 1', data: '20/10/2024' },
+    { key: '2', title1: 'Atividade 2', title2: 'Detalhe 2', data: '21/10/2024' },
+  ];
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
@@ -145,6 +203,7 @@ export default function FormularioMatricula() {
               <h2 className="text-lg font-semibold">Observações sobre o Aluno</h2>
               <Button type="primary">+ Adicionar</Button>
             </div>
+            <Table columns={columnsObservacoes} dataSource={dataObservacoes} pagination={{ pageSize: 5 }} />
           </div>
 
           {/* Atividades do Aluno */}
@@ -153,6 +212,7 @@ export default function FormularioMatricula() {
               <h2 className="text-lg font-semibold">Atividades do Aluno</h2>
               <Button type="primary">+ Adicionar</Button>
             </div>
+            <Table columns={columnsAtividades} dataSource={dataAtividades} pagination={{ pageSize: 5 }} />
           </div>
 
           {/* Botão Salvar */}
