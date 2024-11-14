@@ -147,6 +147,14 @@ export default function FormularioMatricula() {
             </div>
           </div>
 
+          {/* Atividades do Aluno */}
+          <div className="border p-4 rounded-md shadow-sm bg-white">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Atividades do Aluno</h2>
+              <Button type="primary">+ Adicionar</Button>
+            </div>
+          </div>
+
           {/* Botão Salvar */}
           <div className="flex justify-center mt-4">
             <Button type="primary" htmlType="submit">
