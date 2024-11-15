@@ -12,19 +12,19 @@ jobs:
   install_and_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checando código
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Setando a versão do node
         uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      - name: Install dependencies
+      - name: Instalando dependências
         run: npm install
 
-      - name: Run linter
+      - name: Rodando Linter
         run: npm run lint
 
-      - name: Build project
+      - name: Buildando o projeto
         run: npm run build
