@@ -1,10 +1,11 @@
 'use client'
 
 import { Input, Button, Form, Radio, Table } from 'antd';
+import InputMask from 'react-input-mask';
 
 export default function FormularioMatricula() {
 
-  {/*Colunas para Observações sobre aluno*/}
+  // Colunas para Observações sobre o Aluno
   const columnsObservacoes = [
     {
       title: 'Title',
@@ -22,7 +23,8 @@ export default function FormularioMatricula() {
       ),
     },
   ];
-  {/*Colunas para Atividades do Aluno*/}
+
+  // Colunas para Atividades do Aluno
   const columnsAtividades = [
     {
       title: 'Title',
@@ -51,7 +53,7 @@ export default function FormularioMatricula() {
     },
   ];
 
-{/*Dados de exemplo para observações e atividades*/}
+  // Dados de exemplo para as tabelas
   const dataObservacoes = [
     { key: '1', title: 'Observação 1' },
     { key: '2', title: 'Observação 2' },
@@ -81,7 +83,9 @@ export default function FormularioMatricula() {
                 </Form.Item>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Form.Item label="Data de Nascimento" name="dataNascimento">
-                    <Input placeholder="DD/MM/AAAA" />
+                    <InputMask mask="99/99/9999">
+                      {(inputProps) => <Input {...inputProps} placeholder="DD/MM/AAAA" />}
+                    </InputMask>
                   </Form.Item>
                   <Form.Item label="Naturalidade" name="naturalidadeAluno">
                     <Input placeholder="Naturalidade" />
@@ -91,7 +95,9 @@ export default function FormularioMatricula() {
                   <Input placeholder="Endereço completo" />
                 </Form.Item>
                 <Form.Item label="CEP" name="cep">
-                  <Input placeholder="CEP" />
+                  <InputMask mask="99999-999">
+                    {(inputProps) => <Input {...inputProps} placeholder="CEP" />}
+                  </InputMask>
                 </Form.Item>
               </div>
             </div>
@@ -105,13 +111,17 @@ export default function FormularioMatricula() {
                 <Input placeholder="Nome da mãe" />
               </Form.Item>
               <Form.Item label="Telefone" name="telefoneMae">
-                <Input placeholder="Telefone" />
+                <InputMask mask="(99) 99999-9999">
+                  {(inputProps) => <Input {...inputProps} placeholder="Telefone" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="RG" name="rgMae">
                 <Input placeholder="RG" />
               </Form.Item>
               <Form.Item label="CPF" name="cpfMae">
-                <Input placeholder="CPF" />
+                <InputMask mask="999.999.999-99">
+                  {(inputProps) => <Input {...inputProps} placeholder="CPF" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="Naturalidade" name="naturalidadeMae">
                 <Input placeholder="Naturalidade" />
@@ -127,13 +137,17 @@ export default function FormularioMatricula() {
                 <Input placeholder="Nome do pai" />
               </Form.Item>
               <Form.Item label="Telefone" name="telefonePai">
-                <Input placeholder="Telefone" />
+                <InputMask mask="(99) 99999-9999">
+                  {(inputProps) => <Input {...inputProps} placeholder="Telefone" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="RG" name="rgPai">
                 <Input placeholder="RG" />
               </Form.Item>
               <Form.Item label="CPF" name="cpfPai">
-                <Input placeholder="CPF" />
+                <InputMask mask="999.999.999-99">
+                  {(inputProps) => <Input {...inputProps} placeholder="CPF" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="Naturalidade" name="naturalidadePai">
                 <Input placeholder="Naturalidade" />
@@ -152,7 +166,9 @@ export default function FormularioMatricula() {
                 <Input placeholder="Parentesco" />
               </Form.Item>
               <Form.Item label="Telefone" name="telefoneResponsavel">
-                <Input placeholder="Telefone" />
+                <InputMask mask="(99) 99999-9999">
+                  {(inputProps) => <Input {...inputProps} placeholder="Telefone" />}
+                </InputMask>
               </Form.Item>
             </div>
           </div>
@@ -165,13 +181,17 @@ export default function FormularioMatricula() {
                 <Input placeholder="Nome do hospital" />
               </Form.Item>
               <Form.Item label="Telefone Hospital" name="telefoneHospital">
-                <Input placeholder="Telefone do hospital" />
+                <InputMask mask="(99) 99999-9999">
+                  {(inputProps) => <Input {...inputProps} placeholder="Telefone do hospital" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="Médico" name="medico">
                 <Input placeholder="Nome do médico" />
               </Form.Item>
               <Form.Item label="Telefone Médico" name="telefoneMedico">
-                <Input placeholder="Telefone do médico" />
+                <InputMask mask="(99) 99999-9999">
+                  {(inputProps) => <Input {...inputProps} placeholder="Telefone do médico" />}
+                </InputMask>
               </Form.Item>
               <Form.Item label="Endereço Hospital" name="enderecoHospital">
                 <Input placeholder="Endereço completo do hospital" />
