@@ -1,12 +1,12 @@
 import axiosInstance from '@/config/AxiosInstance'
-import { CreateStudentType, StudentResponseDTO } from '@/types/Students'
+import { CreateStudentType, StudentsResponseDTO } from '@/types/Students'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 interface StudentState {
   loading: boolean
   error: string | null
-  students: StudentResponseDTO[]
+  students: StudentsResponseDTO[]
 }
 
 const initialState: StudentState = {

@@ -5,3 +5,11 @@ export type StudentDTO = {
     address: string,
     cep: string
 }
+
+export type StudentsResponseDTO = {
+    id: String,
+    nome: String,
+    nomeResponsavel: String,
+    turma: String,
+    disabled: boolean
+}
