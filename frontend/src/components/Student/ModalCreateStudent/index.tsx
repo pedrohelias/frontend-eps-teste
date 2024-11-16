@@ -2,53 +2,55 @@
 
 import { createStudent, fetchStudents } from '@/store/slices/studentSlice'
 import { AppDispatch, RootState } from '@/store/store'
-import { CreateStudentType } from '@/types/Students'
+import { CategorieType, ClassType, CreateStudentType, StudentsResponseDTO, TurnType } from '@/types/Students'
 import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 type Props = {
   isModalOpen: boolean
   setIsModalOpen: (state: boolean) => void
+  studentToEdit: StudentsResponseDTO
 }
 
 const optsPeriod = [
   {
-    value: 'Integral',
+    value: CategorieType.INTEGRAL,
     label: 'Integral'
   },
   {
-    value: 'Parcial',
+    value: CategorieType.PARCIAL,
     label: 'Parcial'
   }
 ]
 
 const turnType = [
   {
-    value: 'Matutino',
+    value: TurnType.MATUTINO,
     label: 'Matutino'
   },
   {
-    value: 'Verspertino',
+    value: TurnType.VESPERTINO,
     label: 'Vespertino'
   }
 ]
 
 const classType = [
   {
-    value: 'Berçário',
+    value: ClassType.BERCARIO,
     label: 'Berçário'
   },
   {
-    value: 'Creche',
+    value: ClassType.CRECHE,
     label: 'Creche'
   },
   {
-    value: 'Escola',
+    value: ClassType.ESCOLA,
     label: 'Escola'
   },
   {
-    value: 'Reforço',
+    value: ClassType.REFORCO,
     label: 'Reforço'
   }
   
@@ -56,7 +58,8 @@ const classType = [
 
 export default function ModalCreateStudent({
   isModalOpen,
-  setIsModalOpen
+  setIsModalOpen,
+  studentToEdit
 }: Props) {
   const [form] = Form.useForm<CreateStudentType>()
 
@@ -64,6 +67,16 @@ export default function ModalCreateStudent({
     form.resetFields()
     setIsModalOpen(false)
   }
+
+  useEffect(() => {
+    if (studentToEdit) {
+      form.setFieldsValue({
+        name: studentToEdit.name,
+        class: studentToEdit.class,
+        categorie: studentToEdit.categorie
+      })
+    }
+  }, [studentToEdit, form])
 
   const dispatch = useDispatch<AppDispatch>()
   const { loading } = useSelector((state: RootState) => state.student)
@@ -113,7 +126,7 @@ export default function ModalCreateStudent({
         </Form.Item>
 
         <Form.Item
-          name='turno'
+          name='turn'
           label='Turno'
           rules={[
             {
@@ -128,7 +141,7 @@ export default function ModalCreateStudent({
         </Form.Item>
 
         <Form.Item
-          name='Periodo'
+          name='categorie'
           label='Periodo'
           rules={[
             {
@@ -143,7 +156,7 @@ export default function ModalCreateStudent({
         </Form.Item>
 
         <Form.Item
-          name='Turma'
+          name='class'
           label='Turma'
           rules={[
             {

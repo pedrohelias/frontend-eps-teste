@@ -3,7 +3,7 @@
 import ModalCreateStudent from '@/components/Student/ModalCreateStudent'
 import { fetchStudents } from '@/store/slices/studentSlice'
 import { AppDispatch, RootState } from '@/store/store'
-import { StudentsResponseDto } from '@/types/Students'
+import { StudentsResponseDTO } from '@/types/Students'
 import type { TableProps } from 'antd'
 import { Button, Table } from 'antd'
 import classNames from 'classnames'
@@ -29,7 +29,7 @@ export default function Students() {
     }
   }, [error])
 
-  const columns: TableProps<StudentsResponseDto>['columns'] = [
+  const columns: TableProps<StudentsResponseDTO>['columns'] = [
     {
       title: 'Nome do Aluno',
       dataIndex: 'name',
@@ -38,22 +38,28 @@ export default function Students() {
     },
     {
       title: 'Turma',
-      dataIndex: 'turma',
-      key: 'turma'
+      dataIndex: 'class',
+      key: 'class'
     },
     {
-      title: 'Nome do Responsável',
-      dataIndex: 'responsibleName',
-      key: 'responsibleName'
+      title: 'Categoria',
+      dataIndex: 'categorie',
+      key: 'categorie'
     }
   ]
 
-  const data: StudentsResponseDto[] = students.map(student => ({
+  const data: StudentsResponseDTO[] = students?.map(student => ({
+    id: student.id,
+    name: student.name,
+    class: student.class,
+    turn: student.turn,
+    categorie: student.categorie,
+    disabled: student.disabled
   }))
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleRowClick = (record: StudentsResponseDto) => {
+  const handleRowClick = (record: StudentsResponseDTO) => {
     router.push(`/alunos/${record.id}`)
   }
 
@@ -65,7 +71,7 @@ export default function Students() {
           Adicionar Alunos
         </Button>
       </div>
-      <Table<StudentsResponseDto>
+      <Table<StudentsResponseDTO>
         columns={columns}
         dataSource={data}
         pagination={false}

@@ -1,15 +1,32 @@
 export type StudentDTO = {
-    name: string,
-    birthDate: Date,
-    rg: string,
-    address: string,
-    cep: string
+    name: string;
+    categorie: CategorieType;
+    class: ClassType;
+    turn: TurnType;
 }
 
 export type StudentsResponseDTO = {
-    id: String,
-    nome: String,
-    nomeResponsavel: String,
-    turma: String,
-    disabled: boolean
+    id: string;
+    name: string;
+    categorie: CategorieType;
+    class: ClassType;
+    turn: TurnType;
+    disabled: boolean;
+}
+
+export enum CategorieType {
+    PARCIAL = "PARCIAL",
+    INTEGRAL = "INTEGRAL"
+}
+  
+export enum ClassType {
+    BERCARIO = "BERCARIO",
+    CRECHE = "CRECHE",
+    ESCOLA = "ESCOLA",
+    REFORCO = "REFORCO",
+}
+  
+export enum TurnType {
+    MATUTINO = "MATUTINO",
+    VESPERTINO = "VESPERTINO" 
 }
