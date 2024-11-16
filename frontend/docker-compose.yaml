@@ -55,25 +55,7 @@ volumes:
 
 ## No linux, caso tenha problema com vm.max_map_count, digitar o comando "sudo sysctl -w vm.max_map_count=262144"
 
-
-# docker run \
-# --rm \
-# --network=host \
-# -e SONAR_HOST_URL="http://localhost:9001" \
-# -v "/home/helias/frontend2/frontend" \
-# sonarsource/sonar-scanner-cli \
-#     -Dsonar.projectKey=test-vulnerable-app \
-#     -Dsonar.sonar.projectVersion=1.0 \
-#     -Dsonar.sonar.language=py \
-#     -Dsonar.sonar.sourceEncoding=UTF-8 \
-#     -Dsonar.login=sqp_ef323b46c3a3aa674e823f543643166b540e99fb \
-#     -Dsonar.sonar.projectBaseDir=/root/src \
-#     -Dsonar.sources=. 
-
-
-#rodar com a 5.0.1
-
-
+#modelo sonar-scanner
 # sonar-scanner \
 #   -Dsonar.projectKey=front \
 #   -Dsonar.sources=. \
