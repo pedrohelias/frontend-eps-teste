@@ -1,9 +1,9 @@
 'use client'
 
-import { createStudent, fetchStudents } from '@/store/slices/studentSlice'
+import { createStudent, fetchStudents, updateStudent } from '@/store/slices/studentSlice'
 import { AppDispatch, RootState } from '@/store/store'
-import { CategorieType, ClassType, CreateStudentType, StudentsResponseDTO, TurnType } from '@/types/Students'
-import { Button, Form, Input, InputNumber, Modal, Select } from 'antd'
+import { CategorieType, ClassType, StudentDTO, StudentsResponseDTO, TurnType } from '@/types/Students'
+import { Button, Form, Input, Modal, Select } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -61,7 +61,7 @@ export default function ModalCreateStudent({
   setIsModalOpen,
   studentToEdit
 }: Props) {
-  const [form] = Form.useForm<CreateStudentType>()
+  const [form] = Form.useForm<StudentDTO>()
 
   const handleCancel = () => {
     form.resetFields()
@@ -73,7 +73,8 @@ export default function ModalCreateStudent({
       form.setFieldsValue({
         name: studentToEdit.name,
         class: studentToEdit.class,
-        categorie: studentToEdit.categorie
+        categorie: studentToEdit.categorie,
+        turn: studentToEdit.turn
       })
     }
   }, [studentToEdit, form])
@@ -84,16 +85,17 @@ export default function ModalCreateStudent({
   const handleCreateStudent = async () => {
     try {
       const values = await form.validateFields()
-      const action = await dispatch(createStudent(values))
-
-      if (createStudent.rejected.match(action)) {
+      const action = studentToEdit ? await dispatch(updateStudent({ id: studentToEdit.id, data: values })) : await dispatch(createStudent(values))
+      
+      if (createStudent.rejected.match(action) || updateStudent.rejected.match(action)) {
         toast.error(
-          `Erro ao criar Aluno: ${action.payload || 'Erro ao criar Aluno'}`
+          studentToEdit ? `Erro ao atualizar o aluno: ${action.payload || 'Erro ao atualizar Aluno'}` 
+          : `Erro ao criar Aluno: ${action.payload || 'Erro ao criar Aluno'}`
         )
       } else {
         setIsModalOpen(false)
         dispatch(fetchStudents());
-        toast.success(`Aluno criado com sucesso`)
+        toast.success(studentToEdit ? `Aluno atualizado com sucesso` : `Aluno criado com sucesso`)
         form.resetFields()
       }
     } catch (error) {

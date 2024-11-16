@@ -1,6 +1,6 @@
 'use client'
 
-import { HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined, UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Layout, Menu } from 'antd'
 import { useRouter } from 'next/navigation'
@@ -25,7 +25,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [getItem('Escolas', '1', <HomeOutlined />),
-  getItem('Alunos','2', null)
+  getItem('Alunos','2', <UserOutlined />)
 ]
 
 export default function Sidebar() {
