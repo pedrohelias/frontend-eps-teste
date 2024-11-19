@@ -67,7 +67,7 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
   };
 
   return (
-  <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: '#FFA20F' }}>
+  <div className="flex items-center justify-center min-h-screen">
   <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
   <div className="flex justify-center mb-6">
     <img src="/img/logo.png" alt="Logo" className="h-16 w-auto" />
