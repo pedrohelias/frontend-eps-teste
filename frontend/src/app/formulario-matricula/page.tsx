@@ -5,7 +5,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import InputMask from 'react-input-mask';
 import { Component, useState } from 'react';
 import ModalObservacao from '../../components/Matricula/ModalObservacao/index';
-
+import ModalResponsavel from '../../components/Matricula/ModalResponsavel';
 
 // Tipo para observações
 type Observacao = {
@@ -14,13 +14,19 @@ type Observacao = {
   descricao: string;
 };
 
+// Tipo para responsáveis
+type Responsavel = {
+  key: string;
+  nome: string;
+  parentesco: string;
+  telefone: string;
+};
+
 export default function FormularioMatricula() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalObservacaoVisible, setIsModalObservacaoVisible] = useState(false);
+  const [isModalResponsavelVisible, setIsModalResponsavelVisible] = useState(false);
   const [observacoes, setObservacoes] = useState<Observacao[]>([]);
-  const [novaObservacao, setNovaObservacao] = useState<Pick<Observacao, 'titulo' | 'descricao'>>({
-    titulo: '',
-    descricao: '',
-  });
+  const [responsaveis, setResponsaveis] = useState<Responsavel[]>([]);
   const [form] = Form.useForm();
 
   // Colunas para Observações sobre o Aluno
@@ -43,6 +49,37 @@ export default function FormularioMatricula() {
       ),
     },
   ];
+
+  // Colunas para Responsáveis por Buscar
+  const columnsResponsaveis = [
+    {
+      title: 'Nome',
+      dataIndex: 'nome',
+      key: 'nome',
+    },
+    {
+      title: 'Parentesco',
+      dataIndex: 'parentesco',
+      key: 'parentesco',
+    },
+    {
+      title: 'Telefone',
+      dataIndex: 'telefone',
+      key: 'telefone',
+    },
+    {
+      title: 'Ações',
+      key: 'actions',
+      align: 'right' as const,
+      render: (_: any, record: Responsavel) => (
+        <Button
+          type="text"
+          icon={<DeleteOutlined style={{ color: 'red' }} />}
+          onClick={() => handleDeleteResponsavel(record.key)}
+        />
+      ),
+    },
+  ];
 // Adicionar uma nova observação
 const handleAddObservacao = (titulo: string, descricao: string) => {
   setObservacoes((prev) => [
@@ -53,6 +90,20 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
   // Remover uma observação
   const handleDeleteObservacao = (key: string) => {
     setObservacoes((prev) => prev.filter((item) => item.key !== key));
+  };
+
+  const handleAddResponsavel = (nome: string, parentesco: string, telefone: string) => {
+    const telefoneFormatado = telefone.replace(/_/g, '').trim(); // Remove os sublinhados e espaços extras
+    setResponsaveis((prev) => [
+      ...prev,
+      { key: `${prev.length + 1}`, nome, parentesco, telefone: telefoneFormatado },
+    ]);
+  };
+  
+
+  // Remover um responsável
+  const handleDeleteResponsavel = (key: string) => {
+    setResponsaveis((prev) => prev.filter((item) => item.key !== key));
   };
 
   // Envio do formulário
@@ -152,20 +203,13 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
 
           {/* Responsável por Buscar */}
           <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
-            <h2 className="text-lg font-semibold">Responsável por Buscar</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Form.Item label="Nome" name="nomeResponsavel">
-                <Input placeholder="Nome do responsável" />
-              </Form.Item>
-              <Form.Item label="Parentesco" name="parentescoResponsavel">
-                <Input placeholder="Parentesco" />
-              </Form.Item>
-              <Form.Item label="Telefone" name="telefoneResponsavel">
-                <InputMask mask="(99) 99999-9999">
-                  {(inputProps) => <Input {...inputProps} placeholder="Telefone" />}
-                </InputMask>
-              </Form.Item>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Responsável por Buscar</h2>
+              <Button type="primary" onClick={() => setIsModalResponsavelVisible(true)}>
+                + Adicionar
+              </Button>
             </div>
+            <Table columns={columnsResponsaveis} dataSource={responsaveis} pagination={{ pageSize: 5 }} locale={{ emptyText: '' }} />
           </div>
 
           {/* Observações Médicas */}
@@ -212,7 +256,7 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
           <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Observações sobre o Aluno</h2>
-              <Button type="primary" onClick={() => setIsModalVisible(true)}>
+              <Button type="primary" onClick={() => setIsModalObservacaoVisible(true)}>
                 + Adicionar
               </Button>
             </div>
@@ -251,10 +295,17 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
         </Form>
       </div>
 
+      {/* Modal Adicionar Responsável */}
+      <ModalResponsavel
+        isVisible={isModalResponsavelVisible}
+        onClose={() => setIsModalResponsavelVisible(false)}
+        onSave={handleAddResponsavel}
+      />
+
       {/* Modal Adicionar Observação */}
       <ModalObservacao
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
+        isVisible={isModalObservacaoVisible}
+        onClose={() => setIsModalObservacaoVisible(false)}
         onSave={handleAddObservacao}
       />
     </div>
