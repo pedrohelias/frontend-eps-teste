@@ -1,6 +1,6 @@
 'use client'
 
-import { Input, Button, Form, Modal, Table } from 'antd';
+import { Input, Button, Form, Radio, Modal, Table, Checkbox } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import InputMask from 'react-input-mask';
 import { useState } from 'react';
@@ -14,11 +14,12 @@ type Observacao = {
 
 export default function FormularioMatricula() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [observacoes, setObservacoes] = useState<Observacao[]>([]); // Define o tipo como array de Observacao
+  const [observacoes, setObservacoes] = useState<Observacao[]>([]);
   const [novaObservacao, setNovaObservacao] = useState<Pick<Observacao, 'titulo' | 'descricao'>>({
     titulo: '',
     descricao: '',
   });
+  const [form] = Form.useForm(); // Controle do formulário
 
   // Colunas para Observações sobre o Aluno
   const columnsObservacoes = [
@@ -67,6 +68,17 @@ export default function FormularioMatricula() {
   // Remover uma observação
   const handleDeleteObservacao = (key: string) => {
     setObservacoes((prev) => prev.filter((item) => item.key !== key));
+  };
+
+  // Envio do formulário
+  const handleSubmit = () => {
+    form.validateFields(['aceiteResponsabilidade', 'autorizacaoImagens'])
+      .then(() => {
+        console.log('Termos aceitos! Dados enviados.');
+      })
+      .catch(() => {
+        console.error('Por favor, aceite os termos obrigatórios.');
+      });
   };
 
   return (
@@ -169,6 +181,45 @@ export default function FormularioMatricula() {
             </div>
           </div>
 
+          {/* Observações Médicas */}
+          <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
+            <h2 className="text-lg font-semibold mb-4">Observações Médicas</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item label="Hospital" name="hospital">
+                <Input placeholder="Nome do hospital" />
+              </Form.Item>
+              <Form.Item label="Telefone Hospital" name="telefoneHospital">
+                <Input placeholder="Telefone do hospital" />
+              </Form.Item>
+              <Form.Item label="Médico" name="medico">
+                <Input placeholder="Nome do médico" />
+              </Form.Item>
+              <Form.Item label="Telefone Médico" name="telefoneMedico">
+                <Input placeholder="Telefone do médico" />
+              </Form.Item>
+              <Form.Item label="Endereço Hospital" name="enderecoHospital">
+                <Input placeholder="Endereço completo do hospital" />
+              </Form.Item>
+              <Form.Item label="Possui Convênio?" name="possuiConvenio">
+                <Radio.Group>
+                  <Radio value="sim">Sim</Radio>
+                  <Radio value="nao">Não</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item label="Alergias" name="alergias">
+                <Input.TextArea placeholder="Descreva as alergias" />
+              </Form.Item>
+              <Form.Item label="Medicamentos em Caso de Febre" name="medicamentosFebre">
+                <Input.TextArea placeholder="Descreva os medicamentos" />
+              </Form.Item>
+              <Form.Item label="Medicamentos em Caso de Vômito" name="medicamentosVomito">
+                <Input.TextArea placeholder="Descreva os medicamentos" />
+              </Form.Item>
+              <Form.Item label="Observações Gerais" name="observacoesGerais">
+                <Input.TextArea placeholder="Outras observações" />
+              </Form.Item>
+            </div>
+          </div>
 
           {/* Observações sobre o Aluno */}
           <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
@@ -179,6 +230,29 @@ export default function FormularioMatricula() {
               </Button>
             </div>
             <Table columns={columnsObservacoes} dataSource={observacoes} pagination={{ pageSize: 5 }} locale={{ emptyText: '' }} />
+          </div>
+
+          {/* Termos de Aceite */}
+          <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
+            <h2 className="text-lg font-semibold">Termos de Aceite</h2>
+            <Form.Item
+              name="aceiteResponsabilidade"
+              valuePropName="checked"
+              rules={[{ required: true, message: 'Você precisa aceitar os termos para continuar.' }]}
+            >
+              <Checkbox>
+                Assumo inteira responsabilidade pelas informações e pelo pagamento.
+              </Checkbox>
+            </Form.Item>
+            <Form.Item
+              name="autorizacaoImagens"
+              valuePropName="checked"
+              rules={[{ required: true, message: 'Você precisa autorizar para continuar.' }]}
+            >
+              <Checkbox>
+                Autorizo que fotos e filmagens que incluam meu/minha filho(a) sejam feitas e utilizadas pela equipe da escola para fins pedagógicos, para publicação no site/da escola/da turma, e para fins de divulgação nas redes sociais. Estou ciente de que as imagens serão usadas apenas para fins pedagógicos e não comerciais, resguardadas as limitações legais e jurídicas.
+              </Checkbox>
+            </Form.Item>
           </div>
 
           {/* Botão Salvar */}
