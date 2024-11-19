@@ -3,7 +3,9 @@
 import { Input, Button, Form, Radio, Modal, Table, Checkbox } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import InputMask from 'react-input-mask';
-import { useState } from 'react';
+import { Component, useState } from 'react';
+import ModalObservacao from '../../components/Matricula/ModalObservacao/index';
+
 
 // Tipo para observações
 type Observacao = {
@@ -19,7 +21,7 @@ export default function FormularioMatricula() {
     titulo: '',
     descricao: '',
   });
-  const [form] = Form.useForm(); // Controle do formulário
+  const [form] = Form.useForm();
 
   // Colunas para Observações sobre o Aluno
   const columnsObservacoes = [
@@ -41,30 +43,13 @@ export default function FormularioMatricula() {
       ),
     },
   ];
-
-  // Mostrar o modal
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  // Fechar o modal e salvar a observação
-  const handleOk = () => {
-    if (novaObservacao.titulo.trim() && novaObservacao.descricao.trim()) {
-      setObservacoes((prev) => [
-        ...prev,
-        { key: `${prev.length + 1}`, titulo: novaObservacao.titulo, descricao: novaObservacao.descricao },
-      ]);
-      setNovaObservacao({ titulo: '', descricao: '' });
-      setIsModalVisible(false);
-    }
-  };
-
-  // Fechar o modal sem salvar
-  const handleCancel = () => {
-    setNovaObservacao({ titulo: '', descricao: '' });
-    setIsModalVisible(false);
-  };
-
+// Adicionar uma nova observação
+const handleAddObservacao = (titulo: string, descricao: string) => {
+  setObservacoes((prev) => [
+    ...prev,
+    { key: `${prev.length + 1}`, titulo, descricao },
+  ]);
+};
   // Remover uma observação
   const handleDeleteObservacao = (key: string) => {
     setObservacoes((prev) => prev.filter((item) => item.key !== key));
@@ -85,8 +70,7 @@ export default function FormularioMatricula() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
         <Form layout="vertical" className="space-y-6">
-
-           {/* Dados do Aluno */}
+            {/* Dados do Aluno */}
            <div className="border p-8 rounded-md shadow-sm bg-white mb-6 text-center">
             <h2 className="text-2xl font-semibold mb-6">Dados para Matrícula do Aluno</h2>
             <div className="md:col-span-2 space-y-6">
@@ -225,7 +209,7 @@ export default function FormularioMatricula() {
           <div className="border p-4 rounded-md shadow-sm bg-white mb-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Observações sobre o Aluno</h2>
-              <Button type="primary" onClick={showModal}>
+              <Button type="primary" onClick={() => setIsModalVisible(true)}>
                 + Adicionar
               </Button>
             </div>
@@ -264,32 +248,12 @@ export default function FormularioMatricula() {
         </Form>
       </div>
 
-      {/* Modal */}
-      <Modal
-        title="Adicionar Observação"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="Salvar"
-        cancelText="Cancelar"
-      >
-        <Form layout="vertical">
-          <Form.Item label="Título da Observação" required>
-            <Input
-              value={novaObservacao.titulo}
-              onChange={(e) => setNovaObservacao((prev) => ({ ...prev, titulo: e.target.value }))}
-              placeholder="Digite o título"
-            />
-          </Form.Item>
-          <Form.Item label="Descrição da Observação" required>
-            <Input.TextArea
-              value={novaObservacao.descricao}
-              onChange={(e) => setNovaObservacao((prev) => ({ ...prev, descricao: e.target.value }))}
-              placeholder="Digite a descrição"
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
+      {/* Modal Adicionar Observação */}
+      <ModalObservacao
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSave={handleAddObservacao}
+      />
     </div>
   );
 }
