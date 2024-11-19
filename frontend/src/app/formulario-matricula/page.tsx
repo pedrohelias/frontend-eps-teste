@@ -67,9 +67,12 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
-        <Form layout="vertical" className="space-y-6">
+  <div className="flex items-center justify-center min-h-screen" style={{ backgroundColor: '#FFA20F' }}>
+  <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
+  <div className="flex justify-center mb-6">
+    <img src="/img/logo.png" alt="Logo" className="h-16 w-auto" />
+  </div>
+    <Form layout="vertical" className="space-y-6">
             {/* Dados do Aluno */}
            <div className="border p-8 rounded-md shadow-sm bg-white mb-6 text-center">
             <h2 className="text-2xl font-semibold mb-6">Dados para Matrícula do Aluno</h2>
