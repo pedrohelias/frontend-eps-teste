@@ -1,9 +1,10 @@
 'use client'
 
-import { Input, Button, Form, Radio, Modal, Table, Checkbox } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Radio, Table } from 'antd';
+import Image from 'next/image';
+import { useState } from 'react';
 import InputMask from 'react-input-mask';
-import { Component, useState } from 'react';
 import ModalObservacao from '../../components/Matricula/ModalObservacao/index';
 import ModalResponsavel from '../../components/Matricula/ModalResponsavel';
 
@@ -121,7 +122,7 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
   <div className="flex items-center justify-center min-h-screen">
   <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full border">
   <div className="flex justify-center mb-6">
-    <img src="/img/logo.png" alt="Logo" className="h-16 w-auto" />
+    <Image src="/img/logo.svg" alt="Logo" width={80} height={80}/>
   </div>
     <Form layout="vertical" className="space-y-6">
             {/* Dados do Aluno */}
@@ -209,7 +210,7 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
                 + Adicionar
               </Button>
             </div>
-            <Table columns={columnsResponsaveis} dataSource={responsaveis} pagination={{ pageSize: 5 }} locale={{ emptyText: '' }} />
+            <Table columns={columnsResponsaveis} dataSource={responsaveis} pagination={false} locale={{ emptyText: '' }} />
           </div>
 
           {/* Observações Médicas */}
@@ -260,7 +261,7 @@ const handleAddObservacao = (titulo: string, descricao: string) => {
                 + Adicionar
               </Button>
             </div>
-            <Table columns={columnsObservacoes} dataSource={observacoes} pagination={{ pageSize: 5 }} locale={{ emptyText: '' }} />
+            <Table columns={columnsObservacoes} dataSource={observacoes} pagination={false} locale={{ emptyText: '' }} />
           </div>
 
           {/* Termos de Aceite */}
