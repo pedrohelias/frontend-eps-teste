@@ -28,10 +28,11 @@ jobs:
         run: npm install
         working-directory: frontend # Define o diretório de trabalho
 
-     ## - name: Rodando Linter
-     ##   run: npm run lint
+      # Rodando Linter (com a flag --quiet para ignorar erros)
+      - name: Rodando Linter
+        run: npm run lint -- --quiet
+        working-directory: frontend
 
       - name: Buildando o projeto
         run: npm run build
         working-directory: frontend # Define o diretório de trabalho
-
