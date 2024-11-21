@@ -18,7 +18,7 @@ jobs:
         run: ls
         
       - name: Entrando na pasta
-        run: cd frontend-eps-testefrontend
+        run: cd frontend-eps-teste/frontend
 
       - name: Checando código
         uses: actions/checkout@v2
