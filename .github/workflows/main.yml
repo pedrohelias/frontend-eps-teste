@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: '18.x'
 
+      # Mude para o diretório correto
+      - name: Navegando para o diretório frontend
+        run: cd frontend
+
       - name: Instalando dependências
         run: npm install
 
