@@ -13,9 +13,12 @@ jobs:
 
       - name: pwd
         run: pwd
+
+      - name: ls
+        run: ls
         
       - name: Entrando na pasta
-        run: cd frontend
+        run: cd frontend-eps-testefrontend
 
       - name: Checando código
         uses: actions/checkout@v2
