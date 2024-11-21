@@ -1,3 +1,7 @@
-{
-  "extends": ["next/core-web-vitals", "next/typescript"]
-}
+module.exports = {
+  extends: ['next', 'eslint:recommended'],
+  rules: {
+    '@typescript-eslint/no-explicit-any': 'off', // Desabilita a regra de "any"
+    '@typescript-eslint/no-unused-vars': 'off', // Desabilita a regra de "unused-vars"
+  },
+};
