@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: pwd
+        run: pwd
+        
       - name: Entrando na pasta
         run: cd frontend
 
