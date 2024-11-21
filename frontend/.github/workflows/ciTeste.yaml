@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - 'feat/sonarqube'
+      - 'main'
   pull_request:
     branches:
-      - 'feat/sonarqube'
+      - 'main'
 
 jobs:
   install_and_test:
